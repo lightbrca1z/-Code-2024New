@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="message">
+    <iframe id="output"></iframe>
+</body>
+<script>
+    document.getElementById("message").addEventListener("change",
+    function(e){
+        let bom = e.target.value;
+        var msg = new Blob(["<span>" + bom + 
+        "</span>"], {type: "text/html;charset=utf-8"});
+        var url = URL.createObjectURL(msg);
+        url = unescape(encodeURIComponent(url));
+        document.getElementById("output").src = url;
+
+        localStorage.setItem("url", url);
+    });
+
+    window.addEventListener("storage", function(e){
+        if (e.key === "url"){
+            var utf8str = unescape(encodeURIComponent(e.newValue));
+            document.getElementById("output").src = utf8str;
+        }
+    });
+</script>
+</html>

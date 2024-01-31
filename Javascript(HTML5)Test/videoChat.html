@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>WebRTC Video Chat</title>
+  </head>
+  <body>
+    <video id="localVideo" autoplay muted></video>
+    <video id="remoteVideo" autoplay></video>
+
+    <script>
+      const constraints = { video: true, audio: true };
+      const localVideo = document.querySelector('#localVideo');
+      const remoteVideo = document.querySelector('#remoteVideo');
+
+      let localStream, remoteStream, peerConnection;
+
+      navigator.mediaDevices.getUserMedia(constraints)
+        .then(stream => {
+          localStream = stream;
+          localVideo.srcObject = stream;
+        })
+        .catch(error => console.error(error));
+
+      function createPeerConnection() {
+        peerConnection = new RTCPeerConnection();
+        peerConnection.ontrack = handleRemoteStreamAdded;
+        peerConnection.addStream(localStream);
+        peerConnection.createOffer()
+          .then(offer => peerConnection.setLocalDescription(offer))
+          .then(() => sendLocalDescription(peerConnection.localDescription))
+          .catch(error => console.error(error));
+      }
+
+      function handleRemoteStreamAdded(event) {
+        remoteStream = event.streams[0];
+        remoteVideo.srcObject = remoteStream;
+      }
+
+      function handleSignalingMessage(message) {
+        if (!peerConnection) createPeerConnection();
+        const signal = JSON.parse(message);
+        if (signal.sdp) {
+          peerConnection.setRemoteDescription(new RTCSessionDescription(signal.sdp))
+            .then(() => {
+              if (peerConnection.remoteDescription.type === 'offer') {
+                peerConnection.createAnswer()
+                  .then(answer => peerConnection.setLocalDescription(answer))
+                  .then(() => sendLocalDescription(peerConnection.localDescription))
+                  .catch(error => console.error(error));
+              }
+            })
+            .catch(error => console.error(error));
+        } else if (signal.ice) {
+          peerConnection.addIceCandidate(new RTCIceCandidate(signal.ice))
+            .catch(error => console.error(error));
+        }
+      }
+
+      function sendLocalDescription(description) {
+        const message = JSON.stringify({ 'sdp': description });
+        // Send the message to the other peer
+      }
+
+      function sendIceCandidate(candidate) {
+        const message = JSON.stringify({ 'ice': candidate });
+        // Send the message to the other peer
+      }
+
+      // Receive signaling messages from the other peer
+      // and call handleSignalingMessage() function
+    </script>
+  </body>
+</html>

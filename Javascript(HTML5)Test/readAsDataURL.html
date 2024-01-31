@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="file" id="uploader">
+    <img src="no-image.png" alt="icon" id="icon">
+</body>
+
+<script>
+    window.addEventListener("load", function(){
+        var icon = localStorage.getItem("icon");
+        if(icon){
+            document.querySelector("#icon").src = icon;
+        }
+    });
+
+    document.querySelector("#uploader").
+    addEventListener("change", function(){
+        var file = document.querySelector("#uploader".files[0]);
+        var reader = new FileReader();
+
+    reader.onload = function(){
+        document.querySelector("#icon").src = reader.result;
+        localStorage.setItem("icon", reader.result);
+    };
+
+    reader.readAsDataURL(file);
+    });
+</script>
+</html>

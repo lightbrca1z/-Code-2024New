@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Analog Clock</title>
+    <style>
+       #clock {
+        width: 200px;
+        height: 200px;
+        border: 5px solid black;
+        border-radius: 50%;
+        position: relative;
+      }
+      #hour {
+        width: 6px;
+        height: 50px;
+        background-color: black;
+        position: absolute;
+        left: 97px;
+        top: 50px;
+        transform-origin: bottom;
+      }
+      #minute {
+        width: 4px;
+        height: 80px;
+        background-color: black;
+        position: absolute;
+        left: 98px;
+        top: 20px;
+        transform-origin: bottom;
+      }
+      #second {
+        width: 2px;
+        height: 90px;
+        background-color: red;
+        position: absolute;
+        left: 99px;
+        top: 10px;
+        transform-origin: bottom;
+      }
+      #center {
+        width: 10px;
+        height: 10px;
+        background-color: black;
+        border-radius: 50%;
+        position: absolute;
+        left: 95px;
+        top: 95px;
+      }
+      </style>
+  </head>
+  <body>
+    <h1 id="time"></h1>
+    <script>
+        function clock() {
+            const deg = 6;
+            const hr = document.querySelector("#hour");
+            const mn = document.querySelector("#minute");
+            const sc = document.querySelector("#second");
+
+            let day = new Date();
+            let hh = day.getHours() * 30;
+            let mm = day.getMinutes() * deg;
+            let ss = day.getSeconds() * deg;
+
+            hr.style.transform = `rotateZ(${hh + mm / 12}deg)`;
+            mn.style.transform = `rotateZ(${mm}deg)`;
+            sc.style.transform = `rotateZ(${ss}deg)`;
+            }
+
+            setInterval(clock, 1000);
+
+    </script>
+    <div id="clock">
+        <div id="hour"></div>
+        <div id="minute"></div>
+        <div id="second"></div>
+        <div id="center"></div>
+      </div>
+      <div id="time"></div>
+  </body>
+</html>

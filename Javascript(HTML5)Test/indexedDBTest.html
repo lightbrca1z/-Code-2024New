@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    var employeeData1 = {employeeId: "K20001", name: "taro",
+                        address: "tokyo"};
+    var employeeData2 = {employeeId: "K20002", name: "hanako",
+                        address: "osaka"};
+    var request = indexedDB.open("zoo", 2);
+    
+    request.onupgradeneeded = function (event){
+        var db = event.target.result;
+        var store = db.createObjectStore("employee",
+                    {keyPath: "employeeID"});
+        store.createIndex("name", "name",{unique: false});
+        store.createIndex("address", "address", {unique:true});
+
+        store.transaction.oncomplete = function(event){
+            var employeeObjectStore = db.transaction("employee",
+            "readwrite").objectStore("employee");
+            employeeObjectStore.add(employeeData1);
+            employeeObjectStore.add(employeeData2);
+        };
+    };
+</script>
+<body>
+    <p>test</p>
+</body>
+</html>

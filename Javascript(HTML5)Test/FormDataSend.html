@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="fm" method="POST">
+        <input type="file" name="file">
+    </form>
+    <button>send file</button>
+</body>
+<script>
+    window.onload = function(){
+        document.querySelector("button").
+        addEventListener("click", function(){
+            var xhr = new XMLHttpRequest();
+            var form = new FormData(document.getElementById("fm"));
+            xhr.addEventListener("load", function(){
+                console.log(this.response);
+            });
+            xhr.open("post", "upload");
+            xhr.send(form);
+        });
+    };
+</script>
+</html>
