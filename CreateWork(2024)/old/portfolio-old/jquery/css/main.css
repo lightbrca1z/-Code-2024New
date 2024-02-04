@@ -1,0 +1,77 @@
+/* styles.css */
+.slideshow-container {
+    position: relative;
+    display: block;
+    align-items: center;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* .prevCss,
+.nextCss,
+.slide {
+    margin: 0;
+} */
+
+.slide {
+    display: none;
+}
+
+img {
+    width: 100%;
+    height:500px;
+}
+
+/* styles.css */
+/* .slide{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.prevCss,
+.nextCss {
+    display: flex; /* ビューポートの高さいっぱいにセクションを表示 */
+}
+
+/* .prevCss{
+    align-items: flex-start;
+}
+
+.nextCss{
+    align-items: flex-end;
+} */ */
+
+
+/* ボタンのスタイル */
+button {
+    display: flex; /* ボタン要素を横に配置 */
+    align:center;
+    align-items: center; /* 縦方向の中央揃え */
+    width:120px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.prevCss button {
+    background-color: #ff0000; /* 赤色の背景色 */
+    color: #ffffff; /* 白色のテキスト */
+}
+
+.nextCss button {
+    background-color: #0000ff; /* 青色の背景色 */
+    color: #ffffff; /* 白色のテキスト */
+} */
+
+.flexBtn{
+    display: flex; /* ボタン要素を横に配置 */
+    max-width: 400px;
+}
+
+#prevBtn, #nextBtn{
+  width: 200px;
+  float: left;
+}
+#nextBtn{
+  clear: none;
+}

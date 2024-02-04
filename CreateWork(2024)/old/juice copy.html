@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>自販機アプリ</title>
+</head>
+
+<style>
+#keypad button{
+    width:40px;
+    height:40px;
+}
+#downloadButton{
+    width:200px;
+    height:40px;
+}
+</style>
+<body>
+    <h1>ジュース自販機</h1>
+    <p>金額を入力してください（100円単位）:</p>
+    <input type="text" id="amountInput" readonly>
+    <br>
+    <div id="keypad">
+        <button onclick="appendToInput(1)">1</button>
+        <button onclick="appendToInput(2)">2</button>
+        <button onclick="appendToInput(3)">3</button>
+        <br/>
+        <button onclick="appendToInput(4)">4</button>
+        <button onclick="appendToInput(5)">5</button>
+        <button onclick="appendToInput(6)">6</button>
+        <br/>
+        <button onclick="appendToInput(7)">7</button>
+        <button onclick="appendToInput(8)">8</button>
+        <button onclick="appendToInput(9)">9</button>
+        <br/>
+        <button onclick="clearInput()">C</button>
+        <button onclick="appendToInput(0)">0</button>
+        <button onclick="removeLastDigit()">&#9003;</button>
+        <br/>
+    </div>
+  
+    <script>
+        let amount = 0;
+
+        function appendToInput(value) {
+            if (value === '-') {
+                if (amount > 0) {
+                    amount *= -1;
+                }
+            } else {
+                amount = amount * 10 + value;
+            }
+            document.getElementById('amountInput').value = amount;
+            updateButtonStatus();
+        }
+
+        function clearInput() {
+            amount = 0;
+            document.getElementById('amountInput').value = amount;
+            updateButtonStatus();
+        }
+
+        function removeLastDigit() {
+            amount = Math.floor(amount / 10);
+            document.getElementById('amountInput').value = amount;
+            updateButtonStatus();
+        }
+
+        function downloadJuice() {
+            if (amount >= 100) {
+                alert('ジュースをダウンロードしました！');
+                // ジュースをダウンロードするための処理を追加することができます
+                // 例: ジュースを提供するAPIを呼び出すなど
+                resetAmountInput();
+            } else {
+                alert('金額が足りません。');
+            }
+        }
+
+        function resetAmountInput() {
+            amount = 0;
+            document.getElementById('amountInput').value = amount;
+            updateButtonStatus();
+        }
+
+        function updateButtonStatus() {
+            const downloadButton = document.getElementById('downloadButton');
+            if (amount >= 100) {
+                downloadButton.disabled = false;
+            } else {
+                downloadButton.disabled = true;
+            }
+        }
+    </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>電卓</title>
+</head>
+<body>
+    <h1>電卓</h1>
+    <input type="text" id="display" readonly>
+    <br>
+    <div id="keypad">
+        <button onclick="appendToDisplay(1)">1</button>
+        <button onclick="appendToDisplay(2)">2</button>
+        <button onclick="appendToDisplay(3)">3</button>
+        <button onclick="performOperation('+')">+</button>
+        <br/>
+        <button onclick="appendToDisplay(4)">4</button>
+        <button onclick="appendToDisplay(5)">5</button>
+        <button onclick="appendToDisplay(6)">6</button>
+        <button onclick="performOperation('-')">-</button>
+        <br/>
+        <button onclick="appendToDisplay(7)">7</button>
+        <button onclick="appendToDisplay(8)">8</button>
+        <button onclick="appendToDisplay(9)">9</button>
+        <button onclick="performOperation('*')">*</button>
+        <br/>
+        <button onclick="clearDisplay()">C</button>
+        <button onclick="appendToDisplay(0)">0</button>
+        <button onclick="performOperation('/')">/</button>
+        <button onclick="calculateResult()">=</button>
+        <br/>
+    </div>
+
+    <button id="downloadButton" onclick="downloadJuice()" disabled>ジュースをダウンロード</button>
+
+
+    <script>
+        let displayValue = '';
+        let currentOperation = '';
+        let result = 0;
+
+        function appendToDisplay(value) {
+            displayValue += value;
+            document.getElementById('display').value = displayValue;
+        }
+
+        function performOperation(operation) {
+            if (currentOperation !== '') {
+                calculateResult();
+            }
+            currentOperation = operation;
+            result = parseFloat(displayValue);
+            displayValue = '';
+        }
+
+        function clearDisplay() {
+            displayValue = '';
+            currentOperation = '';
+            result = 0;
+            document.getElementById('display').value = '';
+        }
+
+        function calculateResult() {
+            if (currentOperation === '+') {
+                result += parseFloat(displayValue);
+            } else if (currentOperation === '-') {
+                result -= parseFloat(displayValue);
+            } else if (currentOperation === '*') {
+                result *= parseFloat(displayValue);
+            } else if (currentOperation === '/') {
+                result /= parseFloat(displayValue);
+            }
+            displayValue = result.toString();
+            document.getElementById('display').value = displayValue;
+            currentOperation = '';
+        }
+
+        function downloadJuice() {
+            if (amount >= 100) {
+                alert('ジュースをダウンロードしました！');
+                // ジュースをダウンロードするための処理を追加することができます
+                // 例: ジュースを提供するAPIを呼び出すなど
+                resetAmountInput();
+            } else {
+                alert('金額が足りません。');
+            }
+        }
+
+        function resetAmountInput() {
+            amount = 0;
+            document.getElementById('amountInput').value = amount;
+            updateButtonStatus();
+        }
+
+        function updateButtonStatus() {
+            const downloadButton = document.getElementById('downloadButton');
+            if (amount >= 100) {
+                downloadButton.disabled = false;
+            } else {
+                downloadButton.disabled = true;
+            }
+        }
+    </script>
+</body>
+</html>

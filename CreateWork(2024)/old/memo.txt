@@ -1,0 +1,19 @@
+       function downloadJuice() {
+            if (amount >= 100) {
+                alert('ジュースをダウンロードしました！');
+                generateDownloadLink('juice_image.jpg'); // ここで画像をダウンロードリンクを生成します
+                resetAmountInput();
+            } else {
+                alert('金額が足りません。');
+            }
+        }     
+      
+        function generateDownloadLink(imageUrl) {
+            const a = document.createElement('a');
+            a.href = imageUrl;
+            a.download = 'juice_image.jpg'; // ダウンロード時のファイル名を指定
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }

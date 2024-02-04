@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<meta charset="utf-8">
+<head>
+    <title>ジュース自販機</title>
+</head>
+
+<!--
+<link rel="stylesheet" href="./css/style.css"> -->
+
+<style>
+#keypad button{
+    width:65px;
+    height:60px;
+    font-size: 18px;
+    text-align: center;
+}
+#downloadButton{
+    width:220px;
+    height:53px;
+    font-size: 15px;
+}
+
+#amountInput{
+    width:220px;
+    height:40px;
+}
+
+
+.fullWidth h1{
+    font-size: 50px;
+}
+
+.fullWidth p{
+    font-size: 25px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.fullWidth a{
+    font-size: 25px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+</style>
+
+<script>
+    let amount = 0;
+
+    function appendToInput(value) {
+        amount += value;
+        document.getElementById('amountInput').value = amount;
+        updateButtonStatus();
+    }
+
+    function clearInput() {
+        amount = 0;
+        document.getElementById('amountInput').value = amount;
+        updateButtonStatus();
+    }
+
+    function downloadJuice() {
+            if (amount >= 100) {
+                alert('ジュースをダウンロードしました！');
+                generateDownloadLink('./img/juice_image.jpg'); // ここで画像をダウンロードリンクを生成します
+                resetAmountInput();
+            } else {
+                alert('金額が足りません。');
+            }
+        }
+
+    function resetAmountInput() {
+    amount -= 100; // ジュースの価格を合計から引く
+    document.getElementById('amountInput').value = amount;
+    updateButtonStatus();
+    }
+
+    function updateButtonStatus() {
+        const downloadButton = document.getElementById('downloadButton');
+        if (amount >= 100) {
+            downloadButton.disabled = false;
+        } else {
+            downloadButton.disabled = true;
+        }
+    }
+
+    function generateDownloadLink(imageUrl) {
+            const a = document.createElement('a');
+            a.href = imageUrl;
+            a.download = './img/juice_image.jpg'; // ダウンロード時のファイル名を指定
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+</script>
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=yes">
+
+<body>
+    <h1>ジュース自販機</h1>
+    <a href="../index.html">ホームへ戻る</a>
+    <p>金額を入力してください（100円単位）:</p>
+    <input type="text" id="amountInput" readonly>
+    <br>
+    <div id="keypad">
+        <button onclick="appendToInput(1)">1</button>
+        <button onclick="appendToInput(5)">5</button>
+        <button onclick="appendToInput(10)">10</button>
+        <br/>
+        <button onclick="appendToInput(50)">50</button>
+        <button onclick="appendToInput(100)">100</button>
+        <button onclick="appendToInput(500)">500</button>
+        <br/>
+        <button onclick="appendToInput(1000)">1000</button>
+        <button onclick="appendToInput(5000)">5000</button>
+        <button onclick="appendToInput(10000)">10000</button>
+        <br/>
+        <button onclick="appendToInput(0)">0</button>
+        <button onclick="clearInput()">C</button>
+    </div>
+    <button id="downloadButton" onclick="downloadJuice()" disabled>ジュースをダウンロード</button>
+
+</body>
+</html>
