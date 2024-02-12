@@ -25,6 +25,33 @@ public class MonthCheck {
 		}
 		return days;
 	}
-
-
+	
+	public static int number(int number) {
+		return number;
+	}
+	
+	public static String nullValue() {
+		String s = null;
+		return s;
+	}
+	
+	public static boolean trueValue() {
+		int x = 10;
+		
+		if(x == 10) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public static boolean falseValue() {
+		int x = 0;
+		
+		if (x == 10) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 }

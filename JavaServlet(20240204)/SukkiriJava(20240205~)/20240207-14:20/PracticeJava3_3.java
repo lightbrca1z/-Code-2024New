@@ -11,5 +11,5 @@ public class PracticeJava3_3 {
 		} else {
 			System.out.println("映画を見ます");
 		}
-	}s
+	}
 }
