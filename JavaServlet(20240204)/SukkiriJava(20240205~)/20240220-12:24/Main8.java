@@ -1,6 +1,7 @@
 
 
 
+
 public class Main8 {
 		public static void heal(int hp) {
 			hp += 10;

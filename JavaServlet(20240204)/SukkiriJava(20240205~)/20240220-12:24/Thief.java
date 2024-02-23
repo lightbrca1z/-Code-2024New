@@ -1,4 +1,5 @@
 
+
 public class Thief {
 	String name;
 	int hp;

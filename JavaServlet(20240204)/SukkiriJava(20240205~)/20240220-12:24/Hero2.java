@@ -1,4 +1,5 @@
 
+
 public class Hero2 {
 	String name;
 	int hp;
