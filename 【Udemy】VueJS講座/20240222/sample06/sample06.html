@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+
+<body>
+    <div id="app">
+        <p>{{ message }}</p>
+        <p>{{ number + 1 }}</p>
+        <p>{{ message.split('').reverse().join('') }}</p>
+        <p>{{ ok ? 'YES' : 'NO' }}</p>
+
+        //エラー 1
+        <!-- <p>{{ let x = 1 }}</p> -->
+        //エラー 2
+        <!-- <p>{{ if(ok) { return message } }}</p> -->
+
+    </div>
+    
+    <script src="https://unpkg.com/vue@3.1.5"></script>
+    <script src="js/main.js"></script> 
+</body>
+</html>
